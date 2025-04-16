@@ -99,7 +99,12 @@ def save_entry(title, body, tags):
 
     st.success(f"✅ 記録を保存しました： `{file_path}`")
 
-    
+if tab == "🏠 ホーム":
+    st.subheader("QIDTへようこそ")
+    st.markdown("""
+    このアプリは、量子化学的な洞察と直観を記録・構造化し、
+    思考の深まりと再発見を支援する **「知のインターフェース」** です。
+    """)
 
 # --- 各画面処理 ---
 
@@ -498,58 +503,3 @@ elif tab == "📊 構造別結果":
 
             st.markdown("---")
     
-elif tab == "📉 IRスペクトル可視化":
-    import pandas as pd
-    import numpy as np
-    import matplotlib.pyplot as plt
-
-    st.subheader("IR Spectrum Simulator")
-    st.markdown("""
-    このセクションでは、アップロードされたCSVファイルの離散的なIRピークデータをガウス関数で平滑化し、連続的なスペクトルとして表示します。  
-    **CSV形式：1列目 = 波数 (cm⁻¹)、2列目 = 強度 (km/mol)** を想定。
-    """)
-
-    uploaded_file = st.file_uploader("IRデータのCSVファイルをアップロードしてください", type="csv")
-    if uploaded_file is not None:
-        try:
-            df = pd.read_csv(uploaded_file, header=None, names=["freq", "intensity"])
-            st.dataframe(df.head())
-
-            x = np.linspace(400, 4000, 5000)
-            y = np.zeros_like(x)
-            sigma = st.slider("ガウス平滑化幅 σ (cm⁻¹)", 1, 50, 10)
-
-            def gaussian(x, mu, sigma):
-                return np.exp(-((x - mu) ** 2) / (2 * sigma ** 2))
-
-            for _, row in df.iterrows():
-                y += row["intensity"] * gaussian(x, row["freq"], sigma)
-
-            # スペクトルの描画
-            fig, ax = plt.subplots(figsize=(8, 4))
-            ax.plot(x, y, color="blue", lw=2)
-            ax.set_xlabel("Wavenumber (cm⁻¹)")
-            ax.set_ylabel("Intensity (a.u.)")
-            ax.set_title("Simulated IR Spectrum")
-            ax.invert_xaxis()
-            ax.grid(True)
-            st.pyplot(fig)
-
-            # 名前をつけて保存
-            spectrum_name = st.text_input("保存ファイル名（例：sample_spectrum）", value="spectrum")
-            result_df = pd.DataFrame({
-                "Wavenumber (cm⁻¹)": x,
-                "Intensity (a.u.)": y
-            })
-            csv_bytes = result_df.to_csv(index=False).encode("utf-8")
-            st.download_button(
-                "📥 平滑化スペクトルをCSVで保存",
-                data=csv_bytes,
-                file_name=f"{spectrum_name}.csv",
-                mime="text/csv"
-            )
-
-        except Exception as e:
-            st.error(f"CSVファイルの読み込みや処理中にエラーが発生しました: {e}")
-    else:
-        st.info("CSVファイルのアップロードをお待ちしています。")
