@@ -99,13 +99,6 @@ def save_entry(title, body, tags):
 
     st.success(f"✅ 記録を保存しました： `{file_path}`")
 
-# --- 各画面処理 ---
-if tab == "🏠 ホーム":
-    st.subheader("QIDTへようこそ")
-    st.markdown("""
-    このアプリは、量子化学的な洞察と直観を記録・構造化し、
-    思考の深まりと再発見を支援する **「知のインターフェース」** です。
-    """)
     
 
 # --- 各画面処理 ---
