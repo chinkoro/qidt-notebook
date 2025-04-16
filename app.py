@@ -504,7 +504,7 @@ elif tab == "📊 構造別結果":
                         st.error(f"⚠️ 削除できませんでした: {e}")
 
             st.markdown("---")
-
+    
 elif tab == "📉 IRスペクトル可視化":
     import pandas as pd
     import numpy as np
@@ -545,3 +545,4 @@ elif tab == "📉 IRスペクトル可視化":
             st.error(f"CSVファイルの読み込みや処理中にエラーが発生しました: {e}")
     else:
         st.info("CSVファイルのアップロードをお待ちしています。")
+    
