@@ -541,8 +541,15 @@ elif tab == "📉 IRスペクトル可視化":
             ax.grid(True)
             st.pyplot(fig)
 
+        　　spectrum_name = st.text_input("保存ファイル名（例：sample_spectrum）", value="spectrum")
+           result_df = pd.DataFrame({
+               "Wavenumber (cm⁻¹)": x,
+               "Intensity (a.u.)": y
+           })
+           csv_bytes = result_df.to_csv(index=False).encode("utf-8")
+           st.download_button("📥 平滑化スペクトルをCSVで保存", data=csv_bytes, file_name=f"{spectrum_name}.csv", mime="text/csv")
+
         except Exception as e:
             st.error(f"CSVファイルの読み込みや処理中にエラーが発生しました: {e}")
-    else:
-        st.info("CSVファイルのアップロードをお待ちしています。")
+    
     
