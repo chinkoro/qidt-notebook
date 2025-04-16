@@ -99,7 +99,6 @@ def save_entry(title, body, tags):
 
     st.success(f"✅ 記録を保存しました： `{file_path}`")
 
-<<<<<<< HEAD
 # --- 各画面処理 ---
 if tab == "🏠 ホーム":
     st.subheader("QIDTへようこそ")
