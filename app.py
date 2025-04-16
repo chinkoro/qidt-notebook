@@ -532,6 +532,7 @@ elif tab == "📉 IRスペクトル可視化":
             for _, row in df.iterrows():
                 y += row["intensity"] * gaussian(x, row["freq"], sigma)
 
+            # スペクトルの描画
             fig, ax = plt.subplots(figsize=(8, 4))
             ax.plot(x, y, color="blue", lw=2)
             ax.set_xlabel("Wavenumber (cm⁻¹)")
@@ -541,15 +542,21 @@ elif tab == "📉 IRスペクトル可視化":
             ax.grid(True)
             st.pyplot(fig)
 
-        　　 spectrum_name = st.text_input("保存ファイル名（例：sample_spectrum）", value="spectrum")
+            # 名前をつけて保存
+            spectrum_name = st.text_input("保存ファイル名（例：sample_spectrum）", value="spectrum")
             result_df = pd.DataFrame({
-               "Wavenumber (cm⁻¹)": x,
-               "Intensity (a.u.)": y
+                "Wavenumber (cm⁻¹)": x,
+                "Intensity (a.u.)": y
             })
             csv_bytes = result_df.to_csv(index=False).encode("utf-8")
-            st.download_button("📥 平滑化スペクトルをCSVで保存", data=csv_bytes, file_name=f"{spectrum_name}.csv", mime="text/csv")
+            st.download_button(
+                "📥 平滑化スペクトルをCSVで保存",
+                data=csv_bytes,
+                file_name=f"{spectrum_name}.csv",
+                mime="text/csv"
+            )
 
         except Exception as e:
             st.error(f"CSVファイルの読み込みや処理中にエラーが発生しました: {e}")
-    
-    
+    else:
+        st.info("CSVファイルのアップロードをお待ちしています。")
