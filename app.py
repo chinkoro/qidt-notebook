@@ -182,7 +182,7 @@ QIDT-Reaction = {S, P, TS, ΔE, Δρ, ΔOrbital, ΔQIDE}
 > **未来に再現できる“知”を遺すために。**
 """)
 
->>>>>>> f8a8610 (Initial commit with QIDT app)
+
 
 elif tab == "🧪 新規記録":
     st.subheader("新規記録の作成")
