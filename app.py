@@ -502,4 +502,6 @@ elif tab == "📊 構造別結果":
                         st.error(f"⚠️ 削除できませんでした: {e}")
 
             st.markdown("---")
+    else:
+        st.info("まだ構造別の記録がありません。")            
     
